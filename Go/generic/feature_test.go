@@ -21,8 +21,5 @@ func TestMuitType(t *testing.T) {
 }
 
 func GetMaxNum[T any](a, b T) T {
-	if a >= b {
-		return a
-	}
 	return b
 }
