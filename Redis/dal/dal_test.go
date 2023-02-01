@@ -28,7 +28,7 @@ func TestVersion(t *testing.T) {
 		panic(err)
 	} else {
 		t.Log(info)
-	}
+	}afasfa
 }
 
 func TestExampleClient(t *testing.T) {
