@@ -2,7 +2,7 @@ package dal
 
 import (
 	"context"
-	"github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 )
 
 var (
@@ -10,7 +10,7 @@ var (
 )
 
 func GetRedisCli(ctx context.Context) *redis.Client {
-	return redisCli.WithContext(ctx)
+	return redisCli
 }
 
 func InitRedis(ctx context.Context) {

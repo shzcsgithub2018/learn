@@ -3,7 +3,7 @@ package dal
 import (
 	"context"
 	"fmt"
-	"github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 	"testing"
 )
 
@@ -28,7 +28,7 @@ func TestVersion(t *testing.T) {
 		panic(err)
 	} else {
 		t.Log(info)
-	}afasfa
+	}
 }
 
 func TestExampleClient(t *testing.T) {

@@ -1,11 +1,13 @@
-package main
+package string
 
 import (
 	"context"
 	"github.com/shzgithub2018/learn/Redis/dal"
 )
 
-func main() {
-	ctx := context.Background()
+var ctx context.Context
+
+func init() {
+	ctx = context.Background()
 	dal.InitRedis(ctx)
 }
