@@ -9,7 +9,7 @@ var (
 	redisCli *redis.Client
 )
 
-func GetRedisCli(ctx context.Context) *redis.Client {
+func GetRedisCli(ctx ...context.Context) *redis.Client {
 	return redisCli
 }
 
