@@ -1,4 +1,4 @@
-package String
+package hash
 
 import (
 	"context"

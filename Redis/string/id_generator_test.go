@@ -1,4 +1,4 @@
-package string
+package String
 
 import (
 	"github.com/shzgithub2018/learn/Util/concurrency"
