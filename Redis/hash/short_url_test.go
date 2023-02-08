@@ -8,7 +8,7 @@ import (
 func TestShortUrl(t *testing.T) {
 	handler := NewShortUrl(ctx, t, dal.GetRedisCli(ctx))
 
-	shortUrl := handler.Shorten("http://www.baidu.com")
+	shortUrl := handler.Shorten("https://www.baidu.com")
 	t.Log(shortUrl)
 
 	targetUrl := handler.Restore(shortUrl)
@@ -16,6 +16,6 @@ func TestShortUrl(t *testing.T) {
 	/*Output
 	gen and save success.
 	7PV
-	http://www.baidu.com
+	https://www.baidu.com
 	*/
 }

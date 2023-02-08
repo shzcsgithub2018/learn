@@ -1,9 +1,9 @@
 package convert
 
-func MapToList(m map[interface{}]interface{}) []interface{} {
-	var res []interface{}
+func MapToList(m map[any]any) []any {
+	var res []any
 	for key, val := range m {
-		res = append(res, []interface{}{key, val}...)
+		res = append(res, []any{key, val}...)
 	}
 	return res
 }
