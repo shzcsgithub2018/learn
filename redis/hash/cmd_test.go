@@ -1,8 +1,8 @@
 package hash
 
 import (
-	"github.com/shzgithub2018/learn/Redis/dal"
-	"github.com/shzgithub2018/learn/Util/convert"
+	"github.com/shzgithub2018/learn/redis/dal"
+	"github.com/shzgithub2018/learn/util/convert"
 	"testing"
 )
 

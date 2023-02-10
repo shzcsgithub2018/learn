@@ -3,8 +3,8 @@ package hash
 import (
 	"context"
 	"github.com/redis/go-redis/v9"
-	String "github.com/shzgithub2018/learn/Redis/string"
-	"github.com/shzgithub2018/learn/Util/convert"
+	String "github.com/shzgithub2018/learn/redis/string"
+	"github.com/shzgithub2018/learn/util/convert"
 	"testing"
 )
 

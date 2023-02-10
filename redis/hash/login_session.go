@@ -4,7 +4,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"fmt"
-	"github.com/shzgithub2018/learn/Redis/dal"
+	"github.com/shzgithub2018/learn/redis/dal"
 	"log"
 	"math/rand"
 	"strings"

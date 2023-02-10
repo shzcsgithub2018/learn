@@ -1,7 +1,7 @@
 package String
 
 import (
-	"github.com/shzgithub2018/learn/Util/concurrency"
+	"github.com/shzgithub2018/learn/util/concurrency"
 	"testing"
 	"time"
 )

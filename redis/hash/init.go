@@ -1,8 +1,8 @@
-package list
+package hash
 
 import (
 	"context"
-	"github.com/shzgithub2018/learn/Redis/dal"
+	"github.com/shzgithub2018/learn/redis/dal"
 )
 
 var ctx context.Context

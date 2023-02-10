@@ -2,7 +2,7 @@ package String
 
 import (
 	"github.com/redis/go-redis/v9"
-	"github.com/shzgithub2018/learn/Redis/dal"
+	"github.com/shzgithub2018/learn/redis/dal"
 	"testing"
 	"time"
 )
@@ -26,7 +26,7 @@ var m = map[string]string{
 	"homepage": "redis.io",
 	"price":    "2.56",
 	"number":   "10086",
-	"book":     "The Design and Implementation of Redis",
+	"book":     "The Design and Implementation of redis",
 }
 
 const (

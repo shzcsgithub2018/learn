@@ -3,7 +3,7 @@ package hash
 import (
 	"context"
 	"github.com/redis/go-redis/v9"
-	"github.com/shzgithub2018/learn/Redis/dal"
+	"github.com/shzgithub2018/learn/redis/dal"
 	"log"
 	"testing"
 )
