@@ -2,12 +2,11 @@ package composite
 
 import (
 	"fmt"
-	_go "github.com/shzgithub2018/learn/design_patterns/structural_patterns/composite/go/interface"
 )
 
 type Folder struct {
 	Name     string
-	Children []_go.Component
+	Children []Component
 }
 
 func (h *Folder) Search(keyword string) {
@@ -18,10 +17,10 @@ func (h *Folder) Search(keyword string) {
 }
 
 //Add 该操作也可以考虑放到 component interface，透明性
-func (h *Folder) Add(c _go.Component) {
+func (h *Folder) Add(c Component) {
 	h.Children = append(h.Children, c)
 }
 
-func (h *Folder) Remove(c _go.Component) {
+func (h *Folder) Remove(c Component) {
 
 }

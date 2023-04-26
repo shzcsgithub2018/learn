@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/google/wire v0.5.0
 	github.com/redis/go-redis/v9 v9.0.1
+	golang.org/x/sync v0.1.0
 )
 
 require (
