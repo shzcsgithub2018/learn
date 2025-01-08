@@ -17,13 +17,15 @@ func main() {
 	initDB()
 	batchInsert()
 
-	Query()
-
-	fmt.Println("delete")
-
 	Delete()
 
 	Query()
+
+	//fmt.Println("delete")
+	//
+
+	//
+	//Query()
 }
 
 func Delete() {
@@ -41,27 +43,22 @@ func Delete() {
 }
 
 func Query() {
-	db := db.WithContext(context.Background()).Session(&gorm.Session{})
+	db = db.WithContext(context.Background()).Session(&gorm.Session{}).Table(User{}.TableName())
 	var userList []User
 
 	var num, size int
 	if num == 0 && size == 0 {
-		num, size = 1, 50
+		num, size = 0, 5
 	}
 
-	db = db.Table(User{}.TableName())
 	var total int64
-	err := db.Count(&total).Error
+	err = db.Unscoped().Count(&total).Error
 	if err != nil {
 		fmt.Println("query count fail. err:", err)
 		return
 	}
-	fmt.Println("count:", total)
 
-	//db.Where("ID = (?)", 1)
-	fmt.Println(*db.Statement.Dest.(*int64))
-	err = db.Offset((num - 1) * size).Limit(size).Order("created_at DESC").
-		Find(&userList).Error
+	err = db.Table(User{}.TableName()).Offset((num - 1) * size).Limit(size).Find(&userList).Error
 
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return
@@ -71,15 +68,6 @@ func Query() {
 		return
 	}
 
-	//fmt.Println(*db.Statement.Dest.(*int64))
-	err = db.Count(&total).Error
-	if err != nil {
-		fmt.Println("query count fail. err:", err)
-		return
-	}
-	fmt.Println("count:", total)
-	fmt.Println(*db.Statement.Dest.(*int64))
-
 	fmt.Printf("Found user: %+v\n", userList)
 }
 
@@ -88,6 +76,12 @@ func batchInsert() {
 	userList := []User{
 		{ID: 1, Name: "John Doe", Age: 25},
 		{ID: 2, Name: "Bob", Age: 26},
+		{ID: 3, Name: "aJohn Doe", Age: 25},
+		{ID: 4, Name: "fBob", Age: 26},
+		{ID: 5, Name: "fJohn Doe", Age: 25},
+		{ID: 6, Name: "Bfob", Age: 26},
+		{ID: 7, Name: "Jfohn Doe", Age: 25},
+		{ID: 8, Name: "Baob", Age: 26},
 	}
 	db.CreateInBatches(&userList, len(userList))
 }
@@ -126,7 +120,7 @@ func initDB() {
 	)
 
 	// 连接 SQLite 数据库
-	db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{
+	db, err = gorm.Open(sqlite.Open("test1.db"), &gorm.Config{
 		Logger: newLogger,
 	})
 	if err != nil {

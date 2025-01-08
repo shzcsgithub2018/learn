@@ -1,82 +1,49 @@
-package api
+package main
 
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
-	"git.woa.com/ams-ai-biz/ai-customer/internal/errs"
-	"git.woa.com/ams-ai-biz/ai-customer/internal/log"
-	"git.woa.com/ams-ai-biz/ai-customer/internal/rainbow"
 	"github.com/go-resty/resty/v2"
-	"time"
 )
 
-type VectorReqBody struct {
-	QueryID  string `json:"query_id"`
-	Text     string `json:"text"`
-	K        int    `json:"k"`
-	EmbIndex string `json:"emb_index"`
+type ReqBody struct {
+	SessionList [][]string `json:"sessions"`
 }
 
-type VectorRespBody struct {
-	Retcode int    `json:"retcode"`
-	UUID    string `json:"uuid"`
-	Msg     string `json:"msg"`
-	Results []struct {
-		Index  string  `json:"index"`
-		Value  string  `json:"value"`
-		Metric float64 `json:"metric"`
-	} `json:"results"`
+type RespBody struct {
+	Results []string `json:"results"`
 }
 
-type VectorSearchConfig struct {
-	Url                 string  `json:"url"`
-	EmbIndex            string  `json:"emb_index"`
-	Token               string  `json:"token"`
-	Wsid                string  `json:"wsid"`
-	K                   int     `json:"k"`
-	SetConfidenceDegree float64 `json:"set_confidence_degree"`
-}
-
-func GetVector(ctx context.Context, text string) (*VectorRespBody, *VectorSearchConfig, error) {
-	var config VectorSearchConfig
-	err := rainbow.UnmarshalConfig(ctx, rainbow.KnowledgeVectorConfig, &config)
-	if err != nil {
-		return nil, nil, errs.WrapSystemErr(err)
-	}
-
-	body := &VectorReqBody{
-		QueryID:  fmt.Sprintf("%d", time.Now().UnixMilli()),
-		Text:     text,
-		K:        config.K,
-		EmbIndex: config.EmbIndex,
+func SQUClass(ctx context.Context, sessionList [][]string) ([]string, error) {
+	body := &ReqBody{
+		SessionList: sessionList,
 	}
 	bodyStr, _ := json.Marshal(body)
 
 	client := resty.New()
 	resp, err := client.R().
 		EnableTrace().
-		SetAuthToken(config.Token).
 		SetHeaders(map[string]string{
 			"Content-Type": "application/json",
-			"Wsid":         config.Wsid,
 		}).
 		SetBody(bodyStr).
-		Post(config.Url)
+		Post("ai-customer-squ-recognition.production.polaris:9002/squ_class")
 	if err != nil {
-		return nil, nil, errs.WrapSystemErr(err)
+		return nil, err
 	}
 
 	if resp.StatusCode() != 200 {
-		return nil, nil, errs.BuildSystemErr(fmt.Sprintf("Http call fail. code:%d", resp.StatusCode()))
+		return nil, errors.New(fmt.Sprintf("Http call fail. code:%d", resp.StatusCode()))
 	}
 
-	log.ErrorContextf(ctx, "GetVector http resp body:%s", string(resp.Body()))
+	fmt.Println(ctx, "GetVector http resp body:%s", string(resp.Body()))
 
-	res := VectorRespBody{}
+	res := RespBody{}
 	if err = json.Unmarshal(resp.Body(), &res); err != nil {
-		return nil, nil, errs.WrapSystemErr(err)
+		return nil, err
 	}
 
-	return &res, &config, nil
+	return res.Results, nil
 }
