@@ -31,6 +31,7 @@ func Foo(s string){}
 `
 
 func Rewrite() {
+	sort.Ints()
 	// 设置可写入文件
 	fset := token.NewFileSet()
 	// 解析文件
