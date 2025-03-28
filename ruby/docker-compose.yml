@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  ruby:
+    image: ruby:latest  # 使用官方 Ruby 镜像
+    container_name: ruby_dev
+    working_dir: /app
+    volumes:
+      - .:/app  # 挂载当前目录到容器内的 /app
+    environment:
+      - BUNDLE_PATH=/usr/local/bundle  # 设置 Bundler 安装路径
+    tty: true  # 保持容器运行
+    stdin_open: true  # 允许交互式输入
+    command: bash  # 启动 Bash shell
